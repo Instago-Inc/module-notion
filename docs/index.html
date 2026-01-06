@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>notion Documentation</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 48px 24px;
+        font-family: Arial, sans-serif;
+        background: #0f172a;
+        color: #e2e8f0;
+      }
+      main {
+        max-width: 760px;
+        margin: 0 auto;
+      }
+      h1 {
+        margin: 0 0 12px;
+        font-size: 28px;
+      }
+      .intro {
+        font-size: 16px;
+        color: #e2e8f0;
+      }
+      p {
+        margin: 0 0 16px;
+        color: #cbd5f5;
+      }
+      ul {
+        margin: 12px 0 0;
+        padding-left: 18px;
+      }
+      a {
+        color: #93c5fd;
+      }
+      .section {
+        margin-top: 28px;
+      }
+      .muted {
+        color: #94a3b8;
+        font-size: 14px;
+        margin: 6px 0 0;
+      }
+      .code {
+        background: #0b1220;
+        border: 1px solid #1e293b;
+        border-radius: 10px;
+        padding: 16px;
+        white-space: pre-wrap;
+        word-break: break-word;
+        font-size: 13px;
+        line-height: 1.5;
+        color: #e2e8f0;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>module/notion - V8 module</h1>
+      <p class="intro">Organize and track work in Notion without hand-crafting API calls. This module gives you a clean, minimal way to add pages and query databases from your workflows.</p>
+      <p class="muted">Learn more at <a href="https://instago.ai" target="_blank" rel="noopener">https://instago.ai</a>.</p>
+      <div class="section">
+        <h2>Technical reference</h2>
+        <h1>module/notion - V8 module</h1>
+<p>Organize and track work in Notion without hand-crafting API calls. This module gives you a clean, minimal way to add pages and query databases from your workflows.</p>
+<p>It is built to fit naturally into Instago flows, so you can keep step code short and focus on business logic. Learn more at https://instago.ai.</p>
+<h2>Technical reference</h2>
+<p>Exports</p>
+<ul>
+<li><code>configure({ token })</code></li>
+<li><code>appendPage({ databaseId, properties, children? })</code></li>
+<li><code>queryDatabase({ databaseId, filter?, sorts? })</code></li>
+</ul>
+<p>Usage</p>
+<pre class="code"><code>
+const notion = require(&#x27;notion@latest&#x27;);
+
+const token = env[&#x27;notion.token&#x27;] || (env.notion &amp;&amp; env.notion.token);
+notion.configure({ token });
+
+const created = await notion.appendPage({
+  databaseId: env.notionDbId,
+  properties: {
+    Name: { title: [{ text: { content: &#x27;Weekly update&#x27; } }] }
+  }
+});
+</code></pre>
+<p>Configuration</p>
+<ul>
+<li><code>configure({ token })</code> sets the Notion API token used for requests.</li>
+<li>Env (optional): <code>notion.token</code> can be used instead of <code>configure</code> when desired.</li>
+<li>Returns <code>{ ok, data, error }</code> from each API call.</li>
+</ul>
+<p>Examples</p>
+<pre class="code"><code>
+const notion = require(&#x27;notion@latest&#x27;);
+
+// Token can come from env or configure.
+const token = env[&#x27;notion.token&#x27;] || (env.notion &amp;&amp; env.notion.token);
+notion.configure({ token });
+
+const result = await notion.queryDatabase({
+  databaseId: env.notionDbId,
+  filter: {
+    property: &#x27;Status&#x27;,
+    select: { equals: &#x27;Done&#x27; }
+  },
+  sorts: [{ property: &#x27;Created&#x27;, direction: &#x27;descending&#x27; }]
+});
+
+if (!result.ok) console.error(&#x27;notion.queryDatabase failed:&#x27;, result.error);
+</code></pre>
+<pre class="code"><code>
+const notion = require(&#x27;notion@latest&#x27;);
+
+const created = await notion.appendPage({
+  databaseId: env.notionDbId,
+  properties: {
+    Name: { title: [{ text: { content: &#x27;Incident follow-up&#x27; } }] },
+    Priority: { select: { name: &#x27;High&#x27; } }
+  },
+  children: [
+    {
+      object: &#x27;block&#x27;,
+      type: &#x27;paragraph&#x27;,
+      paragraph: { rich_text: [{ text: { content: &#x27;Summary of actions.&#x27; } }] }
+    }
+  ]
+});
+
+if (!created.ok) console.error(&#x27;notion.appendPage failed:&#x27;, created.error);
+</code></pre>
+      </div>
+      
+    </main>
+  </body>
+</html>

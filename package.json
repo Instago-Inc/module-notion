@@ -1,0 +1,17 @@
+{
+  "name": "@instago/notion",
+  "version": "1.0.1",
+  "description": "Module notion",
+  "main": "index.js",
+  "type": "commonjs",
+  "license": "SEE LICENSE IN LICENSE",
+  "keywords": [
+    "instago",
+    "notion"
+  ],
+  "files": [
+    "index.js",
+    "ReadMe.MD",
+    "LICENSE"
+  ]
+}
