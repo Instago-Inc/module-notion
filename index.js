@@ -1,12 +1,12 @@
-// notion@1.0.0 — Notion API helper
+// notion@latest — Notion API helper
 // API:
 // - configure({ token })
 // - appendPage({ databaseId, properties, children? })
 // - queryDatabase({ databaseId, filter?, sorts? })
 
 (function(){
-  const httpx = require('http@1.0.0');
-  const log = require('log@1.0.0').create('notion');
+  const httpx = require('http@latest');
+  const log = require('log@latest').create('notion');
 
   const cfg = { token: null, api: 'https://api.notion.com/v1', version: '2022-06-28' };
   function configure(opts){ if (opts && opts.token) cfg.token = String(opts.token); }

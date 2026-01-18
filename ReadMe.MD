@@ -1,8 +1,8 @@
 # module/notion - V8 module
 
-Organize and track work in Notion without hand-crafting API calls. This module gives you a clean, minimal way to add pages and query databases from your workflows.
+Bring Notion updates into your workflows without juggling manual requests. This module keeps the surface area small so you can focus on the content you want to publish.
 
-It is built to fit naturally into Instago flows, so you can keep step code short and focus on business logic. Learn more at https://instago.ai.
+It is designed for Instago automations; learn more at https://instago.ai.
 
 ## Technical reference
 
@@ -15,7 +15,7 @@ Usage
 ```js
 const notion = require('notion@latest');
 
-const token = env['notion.token'] || (env.notion && env.notion.token);
+const token = env['notion.token'];
 notion.configure({ token });
 
 const created = await notion.appendPage({
@@ -28,15 +28,15 @@ const created = await notion.appendPage({
 
 Configuration
 - `configure({ token })` sets the Notion API token used for requests.
-- Env (optional): `notion.token` can be used instead of `configure` when desired.
-- Returns `{ ok, data, error }` from each API call.
+- Env (optional): `notion.token` can be used instead of `configure`.
+- Each call returns `{ ok, data, error }`.
 
 Examples
 ```js
 const notion = require('notion@latest');
 
 // Token can come from env or configure.
-const token = env['notion.token'] || (env.notion && env.notion.token);
+const token = env['notion.token'];
 notion.configure({ token });
 
 const result = await notion.queryDatabase({
